@@ -40,7 +40,11 @@ cert:
   namespace: argocd
   secretname: nginx.newcross-sbx.com
   dnsname: nginx.newcross-sbx.com
-  
+
+ingressroute:
+  name: nginx-tls
+  host: nginx.newcross-sbx.com
+
 ingress:
   enabled: false
   annotations: {}
