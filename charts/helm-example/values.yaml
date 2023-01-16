@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   pullPolicy: IfNotPresent
   repository: 128230169866.dkr.ecr.eu-west-1.amazonaws.com/argo
-  version: main-51c8360
+  version: main-15439a9
 
 imagePullSecrets: []
 nameOverride: ""
@@ -34,7 +34,13 @@ securityContext: {}
 service:
   type: LoadBalancer
   port: 80
-
+  
+cert:
+  name: nginx.newcross-sbx.com
+  namespace: argocd
+  secretname: nginx.newcross-sbx.com
+  dnsname: nginx.newcross-sbx.com
+  
 ingress:
   enabled: false
   annotations: {}
