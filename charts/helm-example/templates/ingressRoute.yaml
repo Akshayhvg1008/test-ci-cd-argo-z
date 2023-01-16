@@ -11,7 +11,7 @@ spec:
   - kind: Rule
     match: Host(`{{ .Values.ingressroute.host }}`)
     services:
-    - name: {{ .Values.ingressroute.servicename }}
+    - name: {{ include "helm-example.fullname" . }}
       port: 80
   tls:
     secretName: {{ .Values.cert.secretname }}
