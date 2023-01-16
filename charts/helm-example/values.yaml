@@ -36,14 +36,14 @@ service:
   port: 80
   
 cert:
-  name: nginx.newcross-sbx.com
+  name: nginxapp.newcross-sbx.com
   namespace: argocd
-  secretname: nginx.newcross-sbx.com
-  dnsname: nginx.newcross-sbx.com
+  secretname: nginxapp.newcross-sbx.com
+  dnsname: nginxapp.newcross-sbx.com
 
 ingressroute:
-  name: nginx-tls
-  host: nginx.newcross-sbx.com
+  name: nginxapp-tls
+  host: nginxapp.newcross-sbx.com
 
 ingress:
   enabled: false
@@ -51,7 +51,7 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
-    - host: nginx.newcross-sbx.com
+    - host: nginxapp.newcross-sbx.com
       paths: []
   tls: []
   #  - secretName: chart-example-tls
