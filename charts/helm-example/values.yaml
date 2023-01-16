@@ -36,14 +36,14 @@ service:
   port: 80
   
 cert:
-  name: nginxapp.newcross-sbx.com
+  name: nginxappp.newcross-sbx.com
   namespace: argocd
-  secretname: nginxapp.newcross-sbx.com
-  dnsname: nginxapp.newcross-sbx.com
+  secretname: nginxappp.newcross-sbx.com
+  dnsname: nginxappp.newcross-sbx.com
 
 ingressroute:
-  name: nginxapp-tls
-  host: nginxapp.newcross-sbx.com
+  name: nginxappp-tls
+  host: nginxappp.newcross-sbx.com
 
 ingress:
   enabled: false
