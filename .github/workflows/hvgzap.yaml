@@ -13,7 +13,9 @@ jobs:
     - name: Set up OWASP ZAP
       uses: docker://owasp/zap2docker-stable:latest
       with:
-        zap-options: '-daemon -host 0.0.0.0 -port 8080 -config api.disablekey=true'
+       zap-options: '-daemon -host 0.0.0.0 -port 8080 -config api.disablekey=true'
+       volumes:
+        '${{ github.workspace }}:/zap/wrk/'
 
     - name: Run OWASP ZAP Scan
       uses: docker://owasp/zap2docker-stable:latest
