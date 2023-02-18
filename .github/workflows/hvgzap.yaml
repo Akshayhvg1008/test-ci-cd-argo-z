@@ -1,0 +1,28 @@
+name: OWASP ZAP Scan
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Set up OWASP ZAP
+      uses: docker://owasp/zap2docker-stable:latest
+      with:
+        zap-options: '-daemon -host 0.0.0.0 -port 8080 -config api.disablekey=true'
+
+    - name: Run OWASP ZAP Scan
+      uses: docker://owasp/zap2docker-stable:latest
+      with:
+        args: zap-full-scan.py -t https://nginxappy.newcross-sbx.com/ -r <report-file>.html
+      
+    - name: Upload Report to S3
+      uses: actions/upload-artifact@v2
+      with:
+        name: iac-instance-newcross
+        path: <report-file>.html
+
