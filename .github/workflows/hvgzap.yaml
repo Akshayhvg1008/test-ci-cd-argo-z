@@ -10,20 +10,27 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
 
-    - name: Set up OWASP ZAP
-      uses: docker://owasp/zap2docker-stable:latest
+    - name: ZAP Scan
+      uses: zaproxy/action-full-scan@v0.4.0
       with:
-       zap-options: '-daemon -host 0.0.0.0 -port 8080 -config api.disablekey=true'
-       volumes: '${{ github.workspace }}:/zap/wrk:rw, $(pwd):/zap/wrk/:rw'
-
-    - name: Run OWASP ZAP Scan
-      uses: docker://owasp/zap2docker-stable:latest
-      with:
-        args: zap-full-scan.py -t https://nginxappy.newcross-sbx.com/ -r test.html
-      
+       docker_name: 'owasp/zap2docker-stable'
+       target: 'https://nginxappy.newcross-sbx.com/'
+       rules_file_name: '.zap/rules.tsv'
+       cmd_options: '-a'
+      env:
+       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+       AWS_REGION: us-east-1
+  # Upload report to S3
     - name: Upload Report to S3
-      uses: actions/upload-artifact@v2
+      uses: jakejarvis/s3-sync-action@master
       with:
-        name: iac-instance-newcross
-        path: test.html
+        args: --acl public-read --delete
+        from: ./zap/wrk
+        to: s3://iac-instance-newcross/
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: us-east-1
+
 
