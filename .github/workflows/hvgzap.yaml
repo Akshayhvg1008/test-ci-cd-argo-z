@@ -18,11 +18,11 @@ jobs:
     - name: Run OWASP ZAP Scan
       uses: docker://owasp/zap2docker-stable:latest
       with:
-        args: zap-full-scan.py -t https://nginxappy.newcross-sbx.com/ -r <report-file>.html
+        args: zap-full-scan.py -t https://nginxappy.newcross-sbx.com/ -r test.html
       
     - name: Upload Report to S3
       uses: actions/upload-artifact@v2
       with:
         name: iac-instance-newcross
-        path: <report-file>.html
+        path: test.html
 
